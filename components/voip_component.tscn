@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://con4oo0yaul60"]
+
+[ext_resource type="Script" uid="uid://c17uyal53rfif" path="res://scripts/voip_component.gd" id="1_712es"]
+
+[node name="VOIPComponent" type="Node3D"]
+script = ExtResource("1_712es")
+
+[node name="Output" type="AudioStreamPlayer3D" parent="."]

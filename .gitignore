@@ -1,0 +1,8 @@
+.import/
+.export/
+godot.lock
+*.tmp
+*.import
+*.uid
+.godot/
+/android/

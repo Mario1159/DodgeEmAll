@@ -1,0 +1,25 @@
+[gd_scene load_steps=8 format=3 uid="uid://daa7t34qyuqms"]
+
+[ext_resource type="Script" uid="uid://dojrnk63tdud6" path="res://scripts/scene_manager.gd" id="1_l1cu8"]
+[ext_resource type="PackedScene" uid="uid://vktkyse0pma1" path="res://scenes/entrypoint.tscn" id="2_q7wi7"]
+[ext_resource type="PackedScene" uid="uid://dfx60ojid6xi2" path="res://scenes/main_menu.tscn" id="3_87exb"]
+[ext_resource type="PackedScene" uid="uid://dh2ut0k7okqso" path="res://prefabs/client_manager.tscn" id="4_87exb"]
+[ext_resource type="PackedScene" uid="uid://b7qtja1v454x" path="res://prefabs/server_manager.tscn" id="5_6k21d"]
+[ext_resource type="Script" uid="uid://bjjjetv6ly3b1" path="res://scripts/game_control.gd" id="5_q7wi7"]
+[ext_resource type="PackedScene" uid="uid://bhsgujq37tn5p" path="res://prefabs/audio_manager.tscn" id="7_cjhpt"]
+
+[node name="SceneManager" type="Node"]
+script = ExtResource("1_l1cu8")
+server_scene = ExtResource("2_q7wi7")
+game_menu_scene = ExtResource("3_87exb")
+client_manager_packed_scene = ExtResource("4_87exb")
+server_manager_packed_scene = ExtResource("5_6k21d")
+
+[node name="Passthough" type="Node" parent="."]
+
+[node name="Scene" type="Node" parent="."]
+
+[node name="GameControl" type="Node" parent="."]
+script = ExtResource("5_q7wi7")
+
+[node name="AudioManager" parent="GameControl" instance=ExtResource("7_cjhpt")]

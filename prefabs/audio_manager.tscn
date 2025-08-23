@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhsgujq37tn5p"]
+
+[ext_resource type="Script" uid="uid://djrp7eib0d8j4" path="res://scripts/audio_manager.gd" id="1_73uix"]
+
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_4dohe"]
+
+[node name="AudioManager" type="Node"]
+script = ExtResource("1_73uix")
+
+[node name="Input" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamMicrophone_4dohe")
+bus = &"Record"

@@ -1,0 +1,196 @@
+[gd_scene load_steps=14 format=3 uid="uid://47unu7sbf3j1"]
+
+[ext_resource type="Script" uid="uid://7jct21ytaufk" path="res://scripts/player_camera_rig.gd" id="2_lbhrr"]
+[ext_resource type="Theme" uid="uid://cvcmtrk5g0205" path="res://config/default_theme.tres" id="3_iywne"]
+[ext_resource type="Script" uid="uid://co2phr8jphjmp" path="res://scripts/gui_interaction.gd" id="3_lbhrr"]
+[ext_resource type="Script" uid="uid://m71htael0ugm" path="res://scripts/gui_chatbox.gd" id="5_iywne"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a202f"]
+margin = 0.0
+size = Vector3(10, 0.5, 10)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_noarx"]
+size = Vector2(10, 10)
+
+[sub_resource type="Environment" id="Environment_a202f"]
+ambient_light_color = Color(1, 1, 1, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_lbhrr"]
+size = Vector2(23.61, 13.29)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_lbhrr"]
+viewport_path = NodePath("Camera3D/GUIPanel3D/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iywne"]
+resource_local_to_scene = true
+transparency = 1
+no_depth_test = true
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_lbhrr")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iywne"]
+size = Vector3(23.61, 13.29, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a0tk4"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_r3fl7"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, 0.612372, -0.612372, 0, 0, 0)
+light_color = Color(1, 0.784314, 0.784314, 1)
+light_energy = 0.75
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+shape = SubResource("BoxShape3D_a202f")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_noarx")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_a202f")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.707107, 0.408607, -0.577096, 0, 0.816138, 0.577858, 0.707107, 0.408607, -0.577096, -5, 5, -5)
+script = ExtResource("2_lbhrr")
+rotate_speed_deg = 180.0
+
+[node name="GUIPanel3D" type="Node3D" parent="Camera3D"]
+script = ExtResource("3_lbhrr")
+
+[node name="SubViewport" type="SubViewport" parent="Camera3D/GUIPanel3D"]
+transparent_bg = true
+size = Vector2i(1920, 1080)
+
+[node name="GUIOverlay" type="Control" parent="Camera3D/GUIPanel3D/SubViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="Camera3D/GUIPanel3D/SubViewport/GUIOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_iywne")
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Camera3D/GUIPanel3D/SubViewport/GUIOverlay/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+alignment = 1
+
+[node name="Panel" type="Panel" parent="Camera3D/GUIPanel3D/SubViewport/GUIOverlay/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="Camera3D/GUIPanel3D/SubViewport/GUIOverlay/MarginContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "item_1"
+
+[node name="Panel2" type="Panel" parent="Camera3D/GUIPanel3D/SubViewport/GUIOverlay/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="Camera3D/GUIPanel3D/SubViewport/GUIOverlay/MarginContainer/HBoxContainer/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "item_1"
+
+[node name="Panel3" type="Panel" parent="Camera3D/GUIPanel3D/SubViewport/GUIOverlay/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="Camera3D/GUIPanel3D/SubViewport/GUIOverlay/MarginContainer/HBoxContainer/Panel3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "item_1"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Camera3D/GUIPanel3D/SubViewport/GUIOverlay/MarginContainer"]
+custom_minimum_size = Vector2(300, 600)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+script = ExtResource("5_iywne")
+
+[node name="Panel" type="Panel" parent="Camera3D/GUIPanel3D/SubViewport/GUIOverlay/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Camera3D/GUIPanel3D/SubViewport/GUIOverlay/MarginContainer/VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+text = "chat:
+
+"
+
+[node name="TextEdit" type="TextEdit" parent="Camera3D/GUIPanel3D/SubViewport/GUIOverlay/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 4
+placeholder_text = "type something"
+context_menu_enabled = false
+emoji_menu_enabled = false
+shortcut_keys_enabled = false
+wrap_mode = 1
+
+[node name="Quad" type="MeshInstance3D" parent="Camera3D/GUIPanel3D"]
+transform = Transform3D(1, -8.9407e-08, 0, 8.9407e-08, 1, 5.96046e-08, -2.98023e-08, -1.49012e-08, 1, 0, 0.00538254, -8.66025)
+mesh = SubResource("QuadMesh_lbhrr")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_iywne")
+
+[node name="Area3D" type="Area3D" parent="Camera3D/GUIPanel3D/Quad"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Camera3D/GUIPanel3D/Quad/Area3D"]
+shape = SubResource("BoxShape3D_iywne")
+
+[node name="Obstacle" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.85617)
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Obstacle"]
+shape = SubResource("BoxShape3D_a0tk4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Obstacle"]
+mesh = SubResource("BoxMesh_r3fl7")
