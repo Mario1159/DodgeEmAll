@@ -6,9 +6,6 @@ var input_threshold = 0.005
 
 var voip_buffers := {}
 
-func _ready():
-	setup_audio()
-
 func setup_audio():
 	input.stream = AudioStreamMicrophone.new()
 	input.play()
@@ -16,10 +13,18 @@ func setup_audio():
 	effect = AudioServer.get_bus_effect(idx, 0)
 
 func _process(delta):
-	process_mic()
+	if multiplayer.multiplayer_peer and multiplayer.multiplayer_peer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED:
+		process_mic()
 
 func process_mic():
-	var stereo_buffer = effect.get_buffer(effect.get_frames_available())
+	if effect == null:
+		return
+	
+	var available = effect.get_frames_available()
+	if available <= 0:
+		return
+
+	var stereo_buffer = effect.get_buffer(available)
 	if stereo_buffer.size() == 0:
 		return
 
@@ -35,11 +40,13 @@ func process_mic():
 	if max_amp < input_threshold:
 		return
 
-	rpc("_receive_audio_data", data)
+	if multiplayer.has_multiplayer_peer():
+		rpc("_receive_audio_data", data)
 
 @rpc("any_peer", "call_remote", "unreliable_ordered")
 func _receive_audio_data(data: PackedFloat32Array):
 	var sender_id = multiplayer.get_remote_sender_id()
+
 	if not voip_buffers.has(sender_id):
 		voip_buffers[sender_id] = PackedFloat32Array()
 	voip_buffers[sender_id].append_array(data)
@@ -47,8 +54,10 @@ func _receive_audio_data(data: PackedFloat32Array):
 func consume_audio(peer_id: int, frames: int) -> PackedFloat32Array:
 	if not voip_buffers.has(peer_id):
 		return PackedFloat32Array()
+	
 	var buf = voip_buffers[peer_id]
 	var n = min(frames, buf.size())
 	var out = buf.slice(0, n)
 	voip_buffers[peer_id] = buf.slice(n)
+	
 	return out

@@ -9,6 +9,8 @@ func _ready():
 	$Output.stream = generator
 	$Output.play()
 	playback = $Output.get_stream_playback()
+	SceneManager.client.player_spawned.connect(_on_peer_connected)
+	SceneManager.client.player_disconnected.connect(_on_peer_disconnected)
 
 func _process(delta):
 	if peer_id <= 0:
@@ -20,3 +22,9 @@ func _process(delta):
 
 	for sample in samples:
 		playback.push_frame(Vector2(sample, sample))
+
+func _on_peer_connected(id, player_name):
+	peer_id = id
+
+func _on_peer_disconnected(id):
+	peer_id = 0
